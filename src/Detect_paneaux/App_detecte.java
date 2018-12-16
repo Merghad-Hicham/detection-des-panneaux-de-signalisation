@@ -55,7 +55,7 @@ public class App_detecte
 	private JLabel imageView;
 	private JLabel Viewimage;
 	private JFormattedTextField currentTimeField;
-	private CascadeClassifier faceDetector;
+
 	
 	
 	public static void main(String[] args) throws IOException {
@@ -69,17 +69,14 @@ public class App_detecte
 	    setSystemLookAndFeel();
 	    App_detecte app = new App_detecte();
 		app.initGUI();
-		app.loadCascade();		
+			
 		app.runMainLoop();
 	
 
 
 	}
 	
-	private void loadCascade() {
-		String cascadePath = "Detection_panneaux\\40.xml";
-	    faceDetector = new CascadeClassifier(cascadePath);
-	}
+
 
 	private void initGUI() {
            
@@ -154,7 +151,7 @@ public class App_detecte
 	}
 	private void infoDectance(JFrame frame) {
 
-	    JLabel decLabel = new JLabel("dectence :", JLabel.CENTER);
+	    JLabel decLabel = new JLabel("distance :", JLabel.CENTER);
 	    decLabel.setFont(new Font("defaut", Font.BOLD, 12));
 
 	    NumberFormat numberFormat = NumberFormat.getNumberInstance();
@@ -382,6 +379,7 @@ public class App_detecte
         detectPassage(img);
         detectpassage1(img);
         detectInterdire(img);
+        detectRend(img);
         
         
     }
@@ -418,7 +416,7 @@ public class App_detecte
     
     public void detectInterdire(Mat img){
         CascadeClassifier Detector = new CascadeClassifier();
-        Detector.load("Detection_panneaux\\int.xml");
+        Detector.load("Detection_panneaux\\interd.xml");
         MatOfRect faceDetections = new MatOfRect();
         Detector.detectMultiScale(img, faceDetections);
         String filePath = "interdire.png";
@@ -433,10 +431,10 @@ public class App_detecte
     
    public void detectpassage1(Mat img){
             CascadeClassifier Detector = new CascadeClassifier();
-            Detector.load("Detection_panneaux\\passag.xml");
+            Detector.load("Detection_panneaux\\passageR.xml");
             MatOfRect faceDetections = new MatOfRect();
             Detector.detectMultiScale(img, faceDetections);
-            String filePath = "passage.png";
+            String filePath = "passageR.png";
     		Mat newImage = Imgcodecs.imread(filePath);
             for (Rect rect : faceDetections.toArray()) {
                 Imgproc.rectangle(img, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
@@ -462,20 +460,20 @@ public class App_detecte
         
     }
     
-   /* public void detectRend(Mat img){
+   public void detectRend(Mat img){
         CascadeClassifier Detector = new CascadeClassifier();
-        Detector.load("Detection_panneaux\\rend.xml");
+        Detector.load("Detection_panneaux\\ree.xml");
         MatOfRect faceDetections = new MatOfRect();
         Detector.detectMultiScale(img, faceDetections);
-        String filePath = "passage.png";
+        String filePath = "rend.png";
 		Mat newImage = Imgcodecs.imread(filePath);
         for (Rect rect : faceDetections.toArray()) {
             Imgproc.rectangle(img, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
                     new Scalar(0, 255,0));
-            System.out.print("nombre de panneau red :"+faceDetections.rows()+"\n");
+            System.out.print("nombre de panneau rend :"+faceDetections.rows()+"\n");
             ViewUpdate(newImage);
         }
         
     }
-    */
+    
 }
